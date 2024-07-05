@@ -1,71 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Page1 from './pages/Page1';
+import Page2 from './pages/Page2';
+import Page3 from './pages/Page3';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const RegistrationForm = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [registered, setRegistered] = useState(false);
-    const [error, setError] = useState('');
-
-    const handleRegister = () => {
-        if (!username || !password || !confirmPassword) {
-            setError('');
-            alert('Все поля должны быть заполнены')
-            return;
-        }
-
-        if (password !== confirmPassword ) {
-            setError('');
-            alert('Пароли не совпадают')
-            return;
-        }
-
-        if (registered) {
-            setError('');
-            alert('Такой пользователь уже существует')
-            return;
-        }
-
-        setRegistered(true);
-        setError('');
-        alert('Регистрация успешна!');
-    };
-
+const App = () => {
     return (
-        <div>
-            <h2>Регистрация</h2>
-            <div>
-                <input
-                    type="text"
-                    placeholder="Имя пользователя"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-            </div>
-            <div>
-                <input
-                    type="password"
-                    placeholder="Пароль"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-            </div>
-            <div>
-                <input
-                    type="password"
-                    placeholder="Подтвердите пароль"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-            </div>
-            <button onClick={handleRegister}>Зарегистрироваться</button>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-        </div>
+        <Router>
+            <Header />
+            <Routes>
+                <Route path="/page1" element={<Page1 />} />
+                <Route path="/page2" element={<Page2 />} />
+                <Route path="/page3" element={<Page3 />} />
+                <Route path="*" element={<Page1 />} />
+            </Routes>
+        </Router>
     );
 };
 
+export default App;
 
-export default RegistrationForm;
 
 
 
